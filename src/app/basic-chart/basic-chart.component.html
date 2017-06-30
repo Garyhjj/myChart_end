@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-xs-8">
+    <div class="form-group">
+    <label for="unit">数据系列数</label>
+    <select class="form-control"  id="unit" name="unit" (change) ="changeSeries($event)"
+            required>
+      <option *ngFor="let item of items" [value]="item">{{item}}</option>
+    </select>
+    </div>
+    <form #aaa>
+  <div class="form-group">
+    <label for="exampleInputEmail1">数据类名</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" #bbb>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">横坐标名称</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword2">横坐标名称</label>
+    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-default" (click)="initBasic(bbb)">Submit</button>
+</form></div>
+  <div class="col-xs-4">.col-md-4</div>
+</div>
