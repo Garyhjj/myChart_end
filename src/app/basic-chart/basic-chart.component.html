@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-8">
+  <div class="col-xs-4">
     <div class="form-group">
     <label for="unit">数据系列数</label>
     <select class="form-control"  id="unit" name="unit" (change) ="changeSeries($event)"
@@ -7,21 +7,88 @@
       <option *ngFor="let item of items" [value]="item">{{item}}</option>
     </select>
     </div>
-    <form *ngIf="basicTodo">
+    <div class="checkbox">
+    <label>
+      <input type="checkbox" id="checkboxSuccess" value="1" (change) ="isPie($event)">
+      饼图
+    </label>
+  </div>
+    <form [formGroup]="basicTodo" *ngIf="basicTodo">
+      <div class="form-group">
+        <label for="title">图表名称</label>
+        <input type="text" class="form-control" id="title" placeholder="" formControlName="title">
+      </div>
   <div class="form-group">
-    <label for="exampleInputEmail1">数据类名</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+    <label for="legend_data">数据类名</label>
+    <input type="text" class="form-control" id="legend_data" placeholder="" formControlName="legend_data">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">横坐标名称</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <label for="xAxis_data">横坐标名称</label>
+    <input type="text" class="form-control" id="xAxis_data" placeholder="Password" formControlName="xAxis_data">
   </div>
-  <div class="form-group">
-    <label for="exampleInputPassword2">横坐标名称</label>
-    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+  <div class="row">
+    <div class="col-xs-8">
+      <div formArrayName="series">
+        <div class="form-group" *ngFor="let ctrl of basicTodo.controls['series'].controls; let i = index;">
+          <label [for]="'series'+i">数据类名{{i+1}}数据</label>
+          <input type="text" class="form-control" [id]="'series'+i" placeholder="" [formControlName]="i">
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div formArrayName="seriesType" *ngIf="!_isPie">
+        <div class="form-group" *ngFor="let ctrl of basicTodo.controls['seriesType'].controls; let i = index;">
+          <label [for]="'seriesType'+i">图表类型</label>
+          <select class="form-control" [id]="'series'+i" [formControlName]="i">
+            <option  value="bar">柱状图</option>
+            <option  value="line">折线图</option>
+          </select>
+        </div>
+      </div>
+    </div>
   </div>
   <button type="submit" class="btn btn-default" (click)="initBasic()">Submit</button>
 </form>
 </div>
-  <div class="col-xs-4">.col-md-4</div>
+  <div class="col-xs-8">
+    <div class="row">
+      <div class="col-xs-6 form-inline">
+        <div class="form-group">
+          <label for="type">手机型号</label>
+          <select class="form-control" id="type"  value="736*414" #youPhone (change)="selectPhone(youPhone.value);changeSize(size,point.checked)">
+            <option  value="736*414">iphone6 Plus</option>
+            <option  value="1024*768">ipad</option>
+            <option  value="667*375">iphone6</option>
+            <option  value="568*320">iphone5</option>
+            <option  value="480*320">iphone4</option>
+            <option  value="1280*800">Nexus 10</option>
+            <option  value="731*411">Nexus 5X</option>
+            <option  value="773*435">Nexus 6P</option>
+            <option  value="640*360">Galaxy Note 3</option>
+            <option  value="640*360">Galaxy S5</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xs-2 form-inline">
+        <label>
+          <input type="checkbox" id="checkboxSuccess" value="1" #point (change)="changeSize(size,point.checked)">
+          横屏
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-5 form-inline">
+        <div class="form-group">
+          <label for="l*w">长*宽</label>
+          <input type="text" class="form-control" id="l*w" placeholder="736*414" value="736*414" #size>
+        </div>
+      </div>
+      <div class="col-xs-2">
+        <input class="btn btn-default" type="button" value="自定义确定" (click)="changeSize(size,point.checked)">
+      </div>
+    </div>
+    <div class="chartOut" #phone>
+      <div id="main1" class="chart"></div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,13 @@
+.chartOut {
+  margin-left: 10%;
+  margin-top: 5%;
+  height:736px;
+  width:414px;
+  border:1px solid #888;
+}
+.chart{
+  width: 100%;
+  height:47%;
+  min-height: 250px;
+  margin-bottom: 5%;
+}
