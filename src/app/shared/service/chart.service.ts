@@ -161,22 +161,12 @@ export class ChartService {
       series: {
         name: string,
         type: string,
+        yAxisIndex:number,
         data: {
           value: number
         }[],
       }[]
-    },
-  data2:{
-    name: string,
-    type: string,
-    data: {
-      value: number
-    }[],
-  }[]) {
-    data2 = data2.map((res:any) => {
-      res.yAxisIndex = 1;
-      return res;
-    })
+    }) {
     let mySeries:any = data.series;
     mySeries[0].barGap = 0;
     let option = {
@@ -238,7 +228,7 @@ export class ChartService {
            }
         }
       ],
-      series: mySeries.concat(data2),
+      series: mySeries,
       textStyle: {
         fontSize: 18
       }

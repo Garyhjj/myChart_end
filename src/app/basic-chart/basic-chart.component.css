@@ -1,6 +1,6 @@
 .chartOut {
-  margin-left: 10%;
-  margin-top: 5%;
+  margin-left: 10px;
+  margin-top: 10px;
   height:736px;
   width:414px;
   border:1px solid #888;
@@ -10,4 +10,19 @@
   height:47%;
   min-height: 250px;
   margin-bottom: 5%;
+}
+.myForm {
+  height:600px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.box {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.hide{
+  display: none;
+}
+.show {
+  display: block;
 }

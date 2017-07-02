@@ -6,13 +6,15 @@ import { AppRoutingModule } from './app-routing';
 
 import { AppComponent } from './app.component';
 import { BasicChartComponent } from './basic-chart/basic-chart.component';
+import { DetailDefineComponent } from './detail-define/detail-define.component';
 
 import{ ChartService } from './shared/service/chart.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BasicChartComponent
+    BasicChartComponent,
+    DetailDefineComponent
   ],
   imports: [
     BrowserModule,

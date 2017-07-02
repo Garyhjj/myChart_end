@@ -1,61 +1,77 @@
-<div class="row">
+<div class="row box">
   <div class="col-xs-4">
-    <div class="form-group">
-    <label for="unit">数据系列数</label>
-    <select class="form-control"  id="unit" name="unit" (change) ="changeSeries($event)"
-            required>
-      <option *ngFor="let item of items" [value]="item">{{item}}</option>
-    </select>
-    </div>
-    <div class="checkbox">
-    <label>
-      <input type="checkbox" id="checkboxSuccess" value="1" (change) ="isPie($event)">
-      饼图
-    </label>
-  </div>
-    <form [formGroup]="basicTodo" *ngIf="basicTodo">
+    <ul class="nav nav-tabs">
+      <li role="presentation" [class.active]="showWhere === 0 "><a (click)="showWhere = 0">基本定义</a></li>
+      <li role="presentation" [class.active]="showWhere === 1 "><a (click)="showWhere = 1">细节操作</a></li>
+    </ul>
+    <div class="hide" [class.show]="showWhere == 0">
       <div class="form-group">
-        <label for="title">图表名称</label>
-        <input type="text" class="form-control" id="title" placeholder="" formControlName="title">
+        <label for="unit">数据系列数</label>
+        <select class="form-control" id="unit" name="unit" (change)="changeSeries($event)" required>
+        <option *ngFor="let item of items" [value]="item">{{item}}</option>
+      </select>
       </div>
-  <div class="form-group">
-    <label for="legend_data">数据类名</label>
-    <input type="text" class="form-control" id="legend_data" placeholder="" formControlName="legend_data">
-  </div>
-  <div class="form-group">
-    <label for="xAxis_data">横坐标名称</label>
-    <input type="text" class="form-control" id="xAxis_data" placeholder="Password" formControlName="xAxis_data">
-  </div>
-  <div class="row">
-    <div class="col-xs-8">
-      <div formArrayName="series">
-        <div class="form-group" *ngFor="let ctrl of basicTodo.controls['series'].controls; let i = index;">
-          <label [for]="'series'+i">数据类名{{i+1}}数据</label>
-          <input type="text" class="form-control" [id]="'series'+i" placeholder="" [formControlName]="i">
+      <div class="checkbox">
+        <label>
+        <input type="checkbox" id="checkboxSuccess" value="1" (change) ="isPie($event)">
+        饼图
+        </label>
+      </div>
+      <form [formGroup]="basicTodo" *ngIf="basicTodo" class="myForm">
+        <div class="form-group">
+          <label for="title">图表名称</label>
+          <input type="text" class="form-control" id="title" placeholder="" formControlName="title">
         </div>
-      </div>
-    </div>
-    <div class="col-xs-4">
-      <div formArrayName="seriesType" *ngIf="!_isPie">
-        <div class="form-group" *ngFor="let ctrl of basicTodo.controls['seriesType'].controls; let i = index;">
-          <label [for]="'seriesType'+i">图表类型</label>
-          <select class="form-control" [id]="'series'+i" [formControlName]="i">
-            <option  value="bar">柱状图</option>
-            <option  value="line">折线图</option>
-          </select>
+        <div class="form-group">
+          <label for="legend_data">数据类名</label>
+          <input type="text" class="form-control" id="legend_data" placeholder="" formControlName="legend_data">
         </div>
-      </div>
+        <div class="form-group">
+          <label for="xAxis_data">横坐标名称或饼图数据名称</label>
+          <input type="text" class="form-control" id="xAxis_data" placeholder="" formControlName="xAxis_data">
+        </div>
+        <div class="row">
+          <div class="col-xs-5">
+            <div formArrayName="series">
+              <div class="form-group" *ngFor="let ctrl of basicTodo.controls['series'].controls; let i = index;">
+                <label [for]="'series'+i">数据类名{{i+1}}数据</label>
+                <input type="text" class="form-control" [id]="'series'+i" placeholder="" [formControlName]="i">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div formArrayName="seriesType" *ngIf="!_isPie">
+              <div class="form-group" *ngFor="let ctrl of basicTodo.controls['seriesType'].controls; let i = index;">
+                <label [for]="'seriesType'+i">图表类型</label>
+                <select class="form-control" [id]="'series'+i" [formControlName]="i">
+              <option  value="bar">柱状图</option>
+              <option  value="line">折线图</option>
+            </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <div formArrayName="yAxisIndex" *ngIf="!_isPie">
+              <div class="form-group" *ngFor="let ctrl of basicTodo.controls['yAxisIndex'].controls; let i = index;">
+                <label [for]="'yAxisIndex'+i">所属纵坐标</label>
+                <select class="form-control" [id]="'yAxisIndex'+i" [formControlName]="i">
+              <option  value="0">左边</option>
+              <option  value="1">右边</option>
+            </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-default" (click)="initBasic()">画图</button>
+      </form>
     </div>
-  </div>
-  <button type="submit" class="btn btn-default" (click)="initBasic()">Submit</button>
-</form>
-</div>
+    </div>
   <div class="col-xs-8">
     <div class="row">
       <div class="col-xs-6 form-inline">
         <div class="form-group">
           <label for="type">手机型号</label>
-          <select class="form-control" id="type"  value="736*414" #youPhone (change)="selectPhone(youPhone.value);changeSize(size,point.checked)">
+          <select class="form-control" id="type" value="736*414" #youPhone (change)="selectPhone(youPhone.value);changeSize(size,point.checked)">
             <option  value="736*414">iphone6 Plus</option>
             <option  value="1024*768">ipad</option>
             <option  value="667*375">iphone6</option>
@@ -88,7 +104,8 @@
       </div>
     </div>
     <div class="chartOut" #phone>
-      <div id="main1" class="chart"></div>
+      <div id="main1" class="chart" *ngIf="!_isPie"></div>
+      <div id="main2" class="chart" *ngIf="_isPie"></div>
     </div>
   </div>
 </div>
