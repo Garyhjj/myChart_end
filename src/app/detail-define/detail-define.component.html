@@ -1,3 +1,90 @@
-<div class="">
-  456
-</div>
+<form [formGroup]="detailTodo" *ngIf="detailTodo" class="myForm">
+  <div class="">
+    <label>
+    <input type="checkbox" id="checkboxSuccess" formControlName="switch" >
+    纵横坐标交换
+    </label>
+  </div>
+  <div class="form-group">
+    <label for="title_position">标题位置</label>
+    <input type="text" class="form-control" id="title_position" placeholder="10,10 上,左距离,输入0-100" formControlName="title_position">
+  </div>
+  <div class="form-group">
+    <label for="title_fontSize">标题字体大小</label>
+    <select class="form-control" id="title_fontSize" formControlName="title_fontSize">
+    <option *ngFor="let item of fontSize" [value]="item">{{item}}</option>
+  </select>
+  </div>
+  <div class="form-group">
+    <label for="legend_orient">类名排列方法</label>
+    <select class="form-control" id="legend_orient" formControlName="legend_orient">
+  <option  value="horizontal">水平</option>
+  <option  value="vertical">垂直</option>
+</select>
+  </div>
+  <div class="form-group">
+    <label for="legend_position">类名位置</label>
+    <input type="text" class="form-control" id="legend_position" placeholder="10,10 上,左距离,输入0-100" formControlName="legend_position">
+  </div>
+  <div class="form-group">
+    <label for="legend_fontSize">类名字体大小</label>
+    <select class="form-control" id="legend_fontSize" formControlName="legend_fontSize">
+    <option *ngFor="let item of fontSize" [value]="item">{{item}}</option>
+  </select>
+  </div>
+  <div class="form-group">
+    <label for="grid_position">图表位置</label>
+    <input type="text" class="form-control" id="grid_position"
+    placeholder="10,10,10,10 上,左,下,右距离,输入0-100" formControlName="grid_position">
+  </div>
+  <div class="form-group">
+    <label for="grid_height">图表高度</label>
+    <select class="form-control" id="grid_height" formControlName="grid_height">
+    <option *ngFor="let item of myHeight" [value]="item">{{item}}</option>
+  </select>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-6">
+      <label for="xAxisLabel_fontSize">横坐标字体大小</label>
+      <select class="form-control" id="xAxisLabel_fontSize" formControlName="xAxisLabel_fontSize">
+      <option *ngFor="let item of fontSize" [value]="item">{{item}}</option>
+    </select>
+    </div>
+    <div class="form-group col-xs-6">
+      <label for="xAxisLabel_rotate">横坐标字体倾斜度</label>
+      <select class="form-control" id="xAxisLabel_rotate" formControlName="xAxisLabel_rotate">
+      <option *ngFor="let item of myRotate" [value]="item">{{item}}</option>
+    </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-6">
+      <label for="yAxisLabel1_fontSize">第一纵坐标字体大小</label>
+      <select class="form-control" id="yAxisLabel1_fontSize" formControlName="yAxisLabel1_fontSize">
+      <option *ngFor="let item of fontSize" [value]="item">{{item}}</option>
+    </select>
+    </div>
+    <div class="form-group col-xs-6">
+      <label for="yAxisLabel1_rotate">第一纵坐标字体倾斜度</label>
+      <select class="form-control" id="yAxisLabel1_rotate" formControlName="yAxisLabel1_rotate">
+      <option *ngFor="let item of myRotate" [value]="item">{{item}}</option>
+    </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-6">
+      <label for="yAxisLabel2_fontSize">第二纵坐标字体大小</label>
+      <select class="form-control" id="yAxisLabel2_fontSize" formControlName="yAxisLabel2_fontSize">
+      <option *ngFor="let item of fontSize" [value]="item">{{item}}</option>
+    </select>
+    </div>
+    <div class="form-group col-xs-6">
+      <label for="yAxisLabel2_rotate">第二纵坐标字体倾斜度</label>
+      <select class="form-control" id="yAxisLabel2_rotate" formControlName="yAxisLabel2_rotate">
+      <option *ngFor="let item of myRotate" [value]="item">{{item}}</option>
+    </select>
+    </div>
+  </div>
+
+  <!-- <button type="submit" class="btn btn-default" (click)="initBasic()">画图</button> -->
+</form>

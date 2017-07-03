@@ -5,6 +5,8 @@ import { BasicChartComponent } from './basic-chart/basic-chart.component';
 import { DetailDefineComponent } from './detail-define/detail-define.component';
 
 const routes: Routes = [
+  { path: '', redirectTo:'basic',
+  pathMatch:'full' },
   { path: 'basic', component: BasicChartComponent },
   { path: 'detail', component: DetailDefineComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'BasicChartComponent' }

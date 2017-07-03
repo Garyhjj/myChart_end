@@ -5,7 +5,7 @@ import * as echarts from 'echarts';
 export class ChartService {
 
   fontFamily:string[] = ['Helvetica', 'Tahoma', 'Arial', 'STXihei', '华文细黑', 'Microsoft YaHei', '微软雅黑', 'sans-serif'];
-
+  colors:string[] = ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3']
   constructor() {  }
 
   getECharts() {
@@ -172,7 +172,6 @@ export class ChartService {
     let option = {
       title: {
         text: title, textStyle: {
-          fontSize: '17'
         },
         x:'center'
       },
@@ -182,15 +181,10 @@ export class ChartService {
       legend: {
         data: data.legend_data,
         top: '7%',
-        itemGap: 2,
         textStyle: {
-          fontSize: 12
         }
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
         containLabel: true
       },
       xAxis: [
