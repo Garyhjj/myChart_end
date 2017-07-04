@@ -23,6 +23,7 @@ export class BasicChartComponent implements OnInit {
   myChart: any;
   _isPie: boolean;
   _isDoubleY: boolean;
+  _isRoseType: boolean;
   hasSwich: boolean = false;
   myOption: any = '';
   colors = this.chartService.colors;
@@ -66,15 +67,23 @@ export class BasicChartComponent implements OnInit {
   isDoubleY(e) {
     this._isDoubleY = e.target.checked;
   }
+  isRoseType(e) {
+    this._isRoseType = e.target.checked;
+    this.getDetail({
+      type: 97, detail: {
+        roseType: this._isRoseType
+      }
+    })
+  }
   isPie(e) {
     this._isPie = e.target.checked;
-    this.basicTodo.controls['series_l'].setValue('1')
   }
   changeDetail(option) {
     this.myChart && this.myChart.setOption(option);
   }
   getDetail(del) {
     let option: any = this.getOption();
+    if(!option) return;
     switch (del.type) {
       case 0:
         [option.yAxis, option.xAxis] = [option.xAxis, option.yAxis];
@@ -105,6 +114,12 @@ export class BasicChartComponent implements OnInit {
             Object.assign(option.yAxis[1], del.detail)
           }
         }
+        break;
+      case 11:
+        Object.assign(option.series[0], del.detail)
+        break;
+      case 97:
+        option.series[0] = del.detail;
         break;
       case 98:
         option.yAxis[1] = del.detail;
@@ -165,6 +180,7 @@ export class BasicChartComponent implements OnInit {
       this.myOption = this.initNotPie(title, legend_data, xAxis_data, color)
       this.myChart = this.chartService.makeChart('main1', this.myOption);
     }
+    console.log(this.myChart)
   }
   initNotPie(title, legend_data, xAxis_data, color) {
     let series: any = [];
@@ -200,11 +216,12 @@ export class BasicChartComponent implements OnInit {
     let allData: any = [];
     for (let i = 0; i < this.basicTodo.controls['series'].length; i++) {
       let tempSeries = this.basicTodo.controls['series'].controls[i];
-      allData = tempSeries.value.split(',');
-      allData = allData.map((value, index) => {
-        return { value: value, name: legend_data[index] }
-      });
+      allData.push(Number(tempSeries.value));
+
     }
+    allData = allData.map((value, index) => {
+      return { value: value, name: legend_data[index] }
+    });
     let option: any = this.chartService.initPieChart(title, {
       legend_data: legend_data,
       series: [{
@@ -212,6 +229,9 @@ export class BasicChartComponent implements OnInit {
       }]
     })
     option.color = color;
+    if(this.isRoseType) {
+      option.series[0].roseType = true;
+    }
     return option;
   }
   titleChange() {

@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import * as echarts from 'echarts';
 
+import { Subject }           from 'rxjs/Subject';
+
 @Injectable()
 export class ChartService {
-
+  myBaidu:any;
+  chartTerms = new Subject<any>();
   fontFamily:string[] = ['Helvetica', 'Tahoma', 'Arial', 'STXihei', '华文细黑', 'Microsoft YaHei', '微软雅黑', 'sans-serif'];
   colors:string[] = ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3']
-  constructor() {  }
+  constructor() {
 
+  }
   getECharts() {
     return echarts;
   }
@@ -116,7 +120,7 @@ export class ChartService {
           shadowColor: 'rgba(0, 0, 0, 0.5)'
       }
     };
-    mySeries[0].center =['50%','60%'];
+    // mySeries[0].center =['50%','60%'];
     let option = {
     title : {
         text: title,

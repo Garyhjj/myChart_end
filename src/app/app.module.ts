@@ -9,19 +9,21 @@ import { BasicChartComponent } from './basic-chart/basic-chart.component';
 import { DetailDefineComponent } from './detail-define/detail-define.component';
 
 import{ ChartService } from './shared/service/chart.service';
+import { MyBMapDirective }  from './shared/directive/Bmap.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     BasicChartComponent,
-    DetailDefineComponent
+    DetailDefineComponent,
+    MyBMapDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [ChartService],
   bootstrap: [AppComponent]

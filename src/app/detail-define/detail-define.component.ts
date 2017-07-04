@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { ChartService } from '../shared/service/chart.service';
-
+import { Subscription } from 'rxjs/rx';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 @Component({
@@ -9,14 +9,18 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
   styleUrls: ['./detail-define.component.css']
 })
 
-export class DetailDefineComponent implements OnInit {
+export class DetailDefineComponent implements OnInit,OnDestroy {
 
+  @Input() isDoubleY:boolean;
+  @Input() isPie:boolean;
   @Output() changeDetail = new EventEmitter();
 
   detailTodo: any;
   fontSize: number[] = [];
   myHeight: number[] = [];
   myRotate: number[] = [];
+  chartSub:Subscription;
+
   constructor(private chartService: ChartService, private formBuilder: FormBuilder) { }
   ngOnInit() {
     // this.changeDetail.emit('1');
@@ -31,6 +35,12 @@ export class DetailDefineComponent implements OnInit {
     }
     this.detailTodo = this.initWork();
     this.signSubscribe();
+    // this.chartSub = this.chartService.chartTerms.subscribe((val) =>{
+    //
+    // })
+  }
+  ngOnDestroy() {
+    this.chartSub.unsubscribe();
   }
   signSubscribe() {
     this.switchChange();
@@ -47,6 +57,8 @@ export class DetailDefineComponent implements OnInit {
     this.xAxisLabel_rotateChange();
     this.yAxisLabel1_rotateChange();
     this.yAxisLabel2_rotateChange();
+    this.pie_positionChange();
+    this.pie_radiusChange();
   }
   //初始化原始數據
   initWork(work: any = {}): FormGroup {
@@ -65,6 +77,8 @@ export class DetailDefineComponent implements OnInit {
       xAxisLabel_rotate: [0, Validators.required],
       yAxisLabel1_rotate: [0, Validators.required],
       yAxisLabel2_rotate: [0, Validators.required],
+      pie_position: ['', Validators.required],
+      pie_radius: ['', Validators.required],
     });
   }
   switchChange() {
@@ -272,6 +286,28 @@ export class DetailDefineComponent implements OnInit {
           axisLabel: {
             rotate:val
           }
+        }
+      })
+    })
+  }
+  pie_positionChange() {
+    this.detailTodo.controls['pie_position'].valueChanges.subscribe((val) => {
+      let arr = val.split(',');
+      this.changeDetail.emit({
+        type: 11,
+        detail: {
+          center: [arr.length>1 && arr[1]?arr[1]+'%':'50%', arr[0]+'%'],
+        }
+      })
+    })
+  }
+  pie_radiusChange() {
+    this.detailTodo.controls['pie_radius'].valueChanges.subscribe((val) => {
+      let arr = val.split(',');
+      this.changeDetail.emit({
+        type: 11,
+        detail: {
+          radius: [arr.length>1 && arr[1]?arr[1]+'%':'0%', arr[0]+'%'],
         }
       })
     })

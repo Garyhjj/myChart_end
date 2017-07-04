@@ -11,9 +11,12 @@
         <label for="title">配置内容</label>
         <textarea class="form-control" rows="40" [value] ="myOption | json " #code1 (input)="dealCode(code1.value)"></textarea>
       </div>
+      <div class="chart" myBMap [pos]="[113.13402564, 23.03509484]">
+
+      </div>
     </div>
     <div class="hide" [class.show]="showWhere == 1">
-      <app-detail-define (changeDetail)="getDetail($event)"></app-detail-define>
+      <app-detail-define (changeDetail)="getDetail($event)" [isDoubleY]="_isDoubleY" [isPie]="_isPie"></app-detail-define>
     </div>
     <div class="hide" [class.show]="showWhere == 0">
       <div class="row">
@@ -21,6 +24,12 @@
           <label>
           <input type="checkbox" id="checkboxSuccess" value="1" (change) ="isPie($event)">
           饼图
+          </label>
+        </div>
+        <div class="col-xs-3" *ngIf="_isPie">
+          <label>
+          <input type="checkbox" id="checkbox" value="1" (change) ="isRoseType($event)">
+          南丁格尔图
           </label>
         </div>
         <div class="col-xs-3" *ngIf="!_isPie">
@@ -44,7 +53,7 @@
       </div>
 
       <form [formGroup]="basicTodo" *ngIf="basicTodo" class="myForm">
-        <div class="form-group" *ngIf="!_isPie">
+        <div class="form-group">
           <label for="unit">数据系列数</label>
           <select class="form-control" id="unit" formControlName="series_l">
           <option *ngFor="let item of items" [value]="item">{{item}}</option>
@@ -59,15 +68,15 @@
           <input type="text" class="form-control" id="legend_data" placeholder="类名之间请用英文逗号分开" formControlName="legend_data">
         </div>
         <div class="form-group">
-          <label for="xAxis_data">横坐标名称或饼图数据名称</label>
-          <input type="text" class="form-control" id="xAxis_data" placeholder="" formControlName="xAxis_data">
+          <label for="xAxis_data">{{_isPie?'数据名称':'横坐标名称'}}</label>
+          <input type="text" class="form-control" id="xAxis_data" [placeholder]="_isPie?'':'数据之间请用英文逗号分开'" formControlName="xAxis_data">
         </div>
         <div class="row">
           <div class="col-xs-5">
             <div formArrayName="series">
               <div class="form-group" *ngFor="let ctrl of basicTodo.controls['series'].controls; let i = index;">
-                <label [for]="'series'+i">{{i===0 && _isPie?'数据':'数据类名'+(i+1)+'数据'}}</label>
-                <input type="text" class="form-control" [id]="'series'+i" placeholder="数据之间请用英文逗号分开" [formControlName]="i">
+                <label [for]="'series'+i">数据类名{{i+1}}数据</label>
+                <input type="text" class="form-control" [id]="'series'+i" [placeholder]="_isPie?'':'数据之间请用英文逗号分开'" [formControlName]="i">
               </div>
             </div>
           </div>
