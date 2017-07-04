@@ -23,7 +23,7 @@ export class MyBMapDirective {
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.setAttribute('baiduM', '1')
-    script.src = "http://api.map.baidu.com/api?v=2.0&ak=rECGU9AZLOa1SkguIO1UvN08de7kECrL&callback=initBaidu";
+    script.src = "https://api.map.baidu.com/api?v=2.0&ak=rECGU9AZLOa1SkguIO1UvN08de7kECrL&callback=initBaidu";
     document.body.appendChild(script);
   }
   initBaidu() {
