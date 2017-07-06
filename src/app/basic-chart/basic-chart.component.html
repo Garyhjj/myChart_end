@@ -145,11 +145,8 @@
       <div class="col-xs-3 form-inline">
         <div class="form-group">
           <label for="l*w">长*宽</label>
-          <input type="text" class="form-control" id="l*w" placeholder="736*414" value="736*414" #size>
+          <input type="text" class="form-control" id="l*w" placeholder="736*414" value="736*414" #size (input)="changeSize(size,point.checked)">
         </div>
-      </div>
-      <div class="col-xs-2">
-        <input class="btn btn-default" type="button" value="自定义确定" (click)="changeSize(size,point.checked)">
       </div>
     </div>
     <div class="chartOut" #phone>
