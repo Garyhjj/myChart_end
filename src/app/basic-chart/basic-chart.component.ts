@@ -25,6 +25,7 @@ export class BasicChartComponent implements OnInit {
   _isDoubleY: boolean;
   _isRoseType: boolean;
   hasSwich: boolean = false;
+  isScale: boolean = false;
   myOption: any = '';
   colors = this.chartService.colors;
   constructor(private chartService: ChartService, private formBuilder: FormBuilder) { }
@@ -80,10 +81,13 @@ export class BasicChartComponent implements OnInit {
   }
   changeDetail(option) {
     this.myChart && this.myChart.setOption(option);
+    this.myOption = option;
   }
   getDetail(del) {
-    let option: any = this.getOption();
-    if(!option) return;
+    let optionAll: any = this.getOption();
+    if (!optionAll) return;
+    let option = optionAll.baseOption?optionAll.baseOption:optionAll
+    let media:any[] = optionAll.media?optionAll.media:[];
     switch (del.type) {
       case 0:
         [option.yAxis, option.xAxis] = [option.xAxis, option.yAxis];
@@ -118,6 +122,59 @@ export class BasicChartComponent implements OnInit {
       case 11:
         Object.assign(option.series[0], del.detail)
         break;
+      case 12:
+        this.isScale = del.detail;
+        if(del.detail) {
+          let query = [
+            {
+              query:{
+                maxWidth: 2560,
+              },
+              option:{
+                dataZoom:[{
+                  type: 'inside',
+                  disabled:true,
+                  start:1,
+                  end:100
+                }]
+              }
+            },
+            {
+              query:{
+                maxWidth: 420,
+              },
+              option:{
+                dataZoom:[{
+                  type: 'inside',
+                  disabled:false,
+                  xAxisIndex: [0],
+                  start:1,
+                  end:35
+                }]
+              }
+            }
+          ]
+          media = media.concat(query);
+        } else {
+          let query = [
+            {
+              query:{
+                maxWidth: 420,
+              },
+              option:{
+                dataZoom:[{
+                  type: 'inside',
+                  disabled:true,
+                  xAxisIndex: [0],
+                  start:1,
+                  end:100
+                }]
+              }
+            }
+          ]
+          media = media.concat(query);
+        }
+        break;
       case 97:
         option.series[0] = del.detail;
         break;
@@ -131,7 +188,15 @@ export class BasicChartComponent implements OnInit {
         Object.assign(option, del.detail)
         break;
     }
-    this.changeDetail(option)
+    if(media.length>0) {
+      optionAll = {
+        baseOption:option,
+        media:media
+      }
+    } else {
+      optionAll = option
+    }
+    this.changeDetail(optionAll)
   }
   changeSeries(value) {
     let num_c = Number(value);
@@ -229,7 +294,7 @@ export class BasicChartComponent implements OnInit {
       }]
     })
     option.color = color;
-    if(this.isRoseType) {
+    if (this.isRoseType) {
       option.series[0].roseType = true;
     }
     return option;
@@ -308,6 +373,14 @@ export class BasicChartComponent implements OnInit {
   }
 
   showOption() {
-    console.log(JSON.stringify(this.myOption))
+    if(this.isScale) {
+      console.log(this.myOption)
+    } else {
+      if(this.myOption.baseOption) {
+        console.log(this.myOption.baseOption)
+      } else {
+        console.log(this.myOption)
+      }
+    }
   }
 }

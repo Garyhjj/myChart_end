@@ -59,11 +59,13 @@ export class DetailDefineComponent implements OnInit,OnDestroy {
     this.yAxisLabel2_rotateChange();
     this.pie_positionChange();
     this.pie_radiusChange();
+    this.scaleChange();
   }
   //初始化原始數據
   initWork(work: any = {}): FormGroup {
     return this.formBuilder.group({
       switch: [false, Validators.required],
+      scale: [false, Validators.required],
       title_position: ['', Validators.required],
       title_fontSize: [18, Validators.required],
       legend_orient: ['horizontal', Validators.required],
@@ -309,6 +311,14 @@ export class DetailDefineComponent implements OnInit,OnDestroy {
         detail: {
           radius: [arr.length>1 && arr[1]?arr[1]+'%':'0%', arr[0]+'%'],
         }
+      })
+    })
+  }
+  scaleChange() {
+    this.detailTodo.controls['scale'].valueChanges.subscribe((val) => {
+      this.changeDetail.emit({
+        type: 12,
+        detail: val
       })
     })
   }
