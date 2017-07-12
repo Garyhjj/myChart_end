@@ -1,12 +1,12 @@
 <form [formGroup]="detailTodo" *ngIf="detailTodo" class="myForm">
   <div class="row">
-    <div class="col-xs-3" *ngIf="!isPie">
+    <div class="col-xs-3" *ngIf="!isPie && !isDoubleY">
       <label>
-      <input type="checkbox" id="checkboxSuccess" formControlName="switch" >
+      <input type="checkbox" id="checkboxSuccess" formControlName="switch">
       纵横坐标交换
       </label>
     </div>
-    <div class="col-xs-3" *ngIf="!isPie">
+    <div class="col-xs-5" *ngIf="!isPie">
       <label>
       <input type="checkbox" id="checkbox" formControlName="scale" >
       竖屏时启动放大功能

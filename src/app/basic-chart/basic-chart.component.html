@@ -6,7 +6,10 @@
       <li role="presentation" [class.active]="showWhere === 2 "><a (click)="getOption();showWhere = 2">代码操作</a></li>
     </ul>
     <div class="hide" [class.show]="showWhere == 2">
-      <button type="button" class="btn btn-default" (click)="showOption()">输出配置到控制台</button>
+      <div class="row">
+        <div class="col-xs-4"><button type="button" class="btn btn-default" (click)="showOption()">输出配置到控制台</button></div>
+        <div class="col-xs-3"><button type="button" class="btn btn-default" (click)="reDraw()">用配置重新绘图</button></div>
+      </div>
       <div class="form-group">
         <label for="title">配置内容</label>
         <textarea class="form-control" rows="40" [value] ="myOption | json " #code1 (input)="dealCode(code1.value)"></textarea>
@@ -40,13 +43,13 @@
         </div>
         <div class="col-xs-3" *ngIf="!_isPie">
           <label>
-          <input type="checkbox" id="checkbox" value="1" (change) ="firstAdd($event)">
+          <input type="checkbox" id="checkbox" value="1" (change) ="percentAdd1=!percentAdd1;firstAdd(percentAdd1)">
           第一纵坐标加%
           </label>
         </div>
         <div class="col-xs-3" *ngIf="!_isPie && _isDoubleY">
           <label>
-          <input type="checkbox" id="checkbox" value="1" (change) ="secondAdd($event)">
+          <input type="checkbox" id="checkbox" value="1" (change) ="percentAdd2=!percentAdd2;secondAdd(percentAdd2)">
           第二纵坐标加%
           </label>
         </div>
@@ -152,6 +155,15 @@
     <div class="chartOut" #phone>
       <div id="main1" class="chart" *ngIf="!_isPie"></div>
       <div id="main2" class="chart" *ngIf="_isPie"></div>
+      <div class="row">
+        <div class="col-xs-5" *ngIf="itemColor">
+          <label for="itemColor">{{itemName}}</label>
+          <input class="form-control" type="color" id="itemColor" name="favcolor" [(ngModel)]="itemColor" (change)="changeItemColor()"/>
+        </div>
+      </div>
+      <div *ngIf="myChart" style="text-align:center;color:red">
+        ps:点击数据能个性化改变对应的颜色
+      </div>
     </div>
   </div>
 </div>

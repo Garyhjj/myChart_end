@@ -26,7 +26,15 @@ export class BasicChartComponent implements OnInit {
   _isRoseType: boolean;
   hasSwich: boolean = false;
   isScale: boolean = false;
+  percentAdd1: boolean;
+  percentAdd2: boolean;
   myOption: any = '';
+  itemColor: string = '';
+  itemName: string = '';
+  item: {
+    seriesIndex: number;
+    dataIndex: number
+  }
   colors = this.chartService.colors;
   constructor(private chartService: ChartService, private formBuilder: FormBuilder) { }
   ngOnInit() {
@@ -86,36 +94,51 @@ export class BasicChartComponent implements OnInit {
   getDetail(del) {
     let optionAll: any = this.getOption();
     if (!optionAll) return;
-    let option = optionAll.baseOption?optionAll.baseOption:optionAll
-    let media:any[] = optionAll.media?optionAll.media:[];
+    let option = optionAll.baseOption ? optionAll.baseOption : optionAll
+    let media: any[] = optionAll.media ? optionAll.media : [];
     switch (del.type) {
       case 0:
         [option.yAxis, option.xAxis] = [option.xAxis, option.yAxis];
         this.hasSwich = !this.hasSwich
         break;
       case 1:
-        Object.assign(option, del.detail)
+        Object.assign(option.legend, del.detail.legend)
+        break;
+      case 2:
+        Object.assign(option.title, del.detail.title)
+        break;
+      case 6:
+        Object.assign(option.grid, del.detail.grid)
+        break;
+      case 7:
+        Object.assign(option.grid, del.detail.grid)
         break;
       case 8:
         if (this.hasSwich) {
-          Object.assign(option.yAxis[0], del.detail)
+          option.yAxis[0].axisLabel = option.yAxis[0].axisLabel ? option.yAxis[0].axisLabel : {}
+          Object.assign(option.yAxis[0].axisLabel, del.detail.axisLabel)
         } else {
-          Object.assign(option.xAxis[0], del.detail)
+          option.xAxis[0].axisLabel = option.xAxis[0].axisLabel ? option.xAxis[0].axisLabel : {}
+          Object.assign(option.xAxis[0].axisLabel, del.detail.axisLabel)
         }
         break;
       case 9:
         if (this.hasSwich) {
-          Object.assign(option.xAxis[0], del.detail)
+          option.xAxis[0].axisLabel = option.xAxis[0].axisLabel ? option.xAxis[0].axisLabel : {}
+          Object.assign(option.xAxis[0].axisLabel, del.detail.axisLabel)
         } else {
-          Object.assign(option.yAxis[0], del.detail)
+          option.yAxis[0].axisLabel = option.yAxis[0].axisLabel ? option.yAxis[0].axisLabel : {}
+          Object.assign(option.yAxis[0].axisLabel, del.detail.axisLabel)
         }
         break;
       case 10:
         if (this._isDoubleY) {
           if (this.hasSwich) {
-            Object.assign(option.xAxis[1], del.detail)
+            option.xAxis[1].axisLabel = option.xAxis[1].axisLabel ? option.xAxis[1].axisLabel : {}
+            Object.assign(option.xAxis[1].axisLabel, del.detail.axisLabel)
           } else {
-            Object.assign(option.yAxis[1], del.detail)
+            option.yAxis[1].axisLabel = option.yAxis[1].axisLabel ? option.yAxis[1].axisLabel : {}
+            Object.assign(option.yAxis[1].axisLabel, del.detail.axisLabel)
           }
         }
         break;
@@ -124,32 +147,32 @@ export class BasicChartComponent implements OnInit {
         break;
       case 12:
         this.isScale = del.detail;
-        if(del.detail) {
+        if (del.detail) {
           let query = [
             {
-              query:{
+              query: {
                 maxWidth: 2560,
               },
-              option:{
-                dataZoom:[{
+              option: {
+                dataZoom: [{
                   type: 'inside',
-                  disabled:true,
-                  start:1,
-                  end:100
+                  disabled: true,
+                  start: 1,
+                  end: 100
                 }]
               }
             },
             {
-              query:{
+              query: {
                 maxWidth: 420,
               },
-              option:{
-                dataZoom:[{
+              option: {
+                dataZoom: [{
                   type: 'inside',
-                  disabled:false,
+                  disabled: false,
                   xAxisIndex: [0],
-                  start:1,
-                  end:35
+                  start: 1,
+                  end: 35
                 }]
               }
             }
@@ -158,16 +181,16 @@ export class BasicChartComponent implements OnInit {
         } else {
           let query = [
             {
-              query:{
+              query: {
                 maxWidth: 420,
               },
-              option:{
-                dataZoom:[{
+              option: {
+                dataZoom: [{
                   type: 'inside',
-                  disabled:true,
+                  disabled: true,
                   xAxisIndex: [0],
-                  start:1,
-                  end:100
+                  start: 1,
+                  end: 100
                 }]
               }
             }
@@ -175,23 +198,30 @@ export class BasicChartComponent implements OnInit {
           media = media.concat(query);
         }
         break;
+      case 96:
+        let data = option.series[this.item.seriesIndex].data[this.item.dataIndex] || '';
+        if (!data) return;
+        data.itemStyle = data.itemStyle || {};
+        data.itemStyle.normal = data.itemStyle.normal || {};
+        Object.assign(data.itemStyle.normal, del.detail.normal);
+        break;
       case 97:
-        option.series[0] = del.detail;
+        Object.assign(option.series[0], del.detail);
         break;
       case 98:
-        option.yAxis[1] = del.detail;
+        Object.assign(option.yAxis[1], del.detail)
         break;
       case 99:
-        option.yAxis[0] = del.detail;
+        Object.assign(option.yAxis[0], del.detail)
         break;
       default:
         Object.assign(option, del.detail)
         break;
     }
-    if(media.length>0) {
+    if (media.length > 0) {
       optionAll = {
-        baseOption:option,
-        media:media
+        baseOption: option,
+        media: media
       }
     } else {
       optionAll = option
@@ -245,7 +275,34 @@ export class BasicChartComponent implements OnInit {
       this.myOption = this.initNotPie(title, legend_data, xAxis_data, color)
       this.myChart = this.chartService.makeChart('main1', this.myOption);
     }
+    this.firstAdd(this.percentAdd1);
+    if (this._isDoubleY) {
+      this.secondAdd(this.percentAdd2);
+    }
+    this.myChart.on('click', (item) => {
+      console.log(item);
+      this.showItemColor(item)
+    })
     console.log(this.myChart)
+  }
+  showItemColor(item) {
+    this.item = {
+      seriesIndex: item.seriesIndex,
+      dataIndex: item.dataIndex
+    }
+    this.itemName = `系列${item.seriesIndex + 1}的第${item.dataIndex + 1}个数据的颜色`;
+    this.itemColor = item.color;
+  }
+  changeItemColor() {
+    console.log(this.itemColor)
+    this.getDetail({
+      type: 96,
+      detail: {
+        normal: {
+          color: this.itemColor
+        }
+      }
+    })
   }
   initNotPie(title, legend_data, xAxis_data, color) {
     let series: any = [];
@@ -345,13 +402,13 @@ export class BasicChartComponent implements OnInit {
   firstAdd(e) {
     this.getDetail({
       type: 99,
-      detail: this.percentAdd(e.target.checked)
+      detail: this.percentAdd(e)
     })
   }
   secondAdd(e) {
     this.getDetail({
       type: 98,
-      detail: this.percentAdd(e.target.checked)
+      detail: this.percentAdd(e)
     })
   }
   percentAdd(checkd: boolean) {
@@ -373,14 +430,21 @@ export class BasicChartComponent implements OnInit {
   }
 
   showOption() {
-    if(this.isScale) {
+    if (this.isScale) {
+      console.log(JSON.stringify(this.myOption))
       console.log(this.myOption)
     } else {
-      if(this.myOption.baseOption) {
+      if (this.myOption.baseOption) {
+        console.log(JSON.stringify(this.myOption.baseOption))
         console.log(this.myOption.baseOption)
       } else {
+        console.log(JSON.stringify(this.myOption))
         console.log(this.myOption)
       }
     }
+  }
+  reDraw() {
+    this.myChart.clear();
+    this.myChart.setOption(this.myOption);
   }
 }

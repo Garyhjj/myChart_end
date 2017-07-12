@@ -24,6 +24,9 @@ export class MyBMapDirective {
     script.type = "text/javascript";
     script.setAttribute('baiduM', '1')
     script.src = "https://api.map.baidu.com/api?v=2.0&ak=rECGU9AZLOa1SkguIO1UvN08de7kECrL&callback=initBaidu";
+    // script.onload = () => {
+    //   console.log(778899)
+    // }
     document.body.appendChild(script);
   }
   initBaidu() {

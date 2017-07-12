@@ -109,7 +109,7 @@ export class DetailDefineComponent implements OnInit,OnDestroy {
       let temp = val.split(',');
       let position = this.makePosition(temp);
       this.changeDetail.emit({
-        type: 2,
+        type: 1,
         detail: {
           legend: position
         }
@@ -120,7 +120,7 @@ export class DetailDefineComponent implements OnInit,OnDestroy {
   legend_fontSizeChange() {
     this.detailTodo.controls['legend_fontSize'].valueChanges.subscribe((val) => {
       this.changeDetail.emit({
-        type: 3,
+        type: 1,
         detail: {
           legend: {
             textStyle: {
@@ -137,7 +137,7 @@ export class DetailDefineComponent implements OnInit,OnDestroy {
       let temp = val.split(',');
       let position = this.makePosition(temp);
       this.changeDetail.emit({
-        type: 4,
+        type: 2,
         detail: {
           title: position
         }
@@ -148,7 +148,7 @@ export class DetailDefineComponent implements OnInit,OnDestroy {
   title_fontSizeChange() {
     this.detailTodo.controls['title_fontSize'].valueChanges.subscribe((val) => {
       this.changeDetail.emit({
-        type: 5,
+        type: 2,
         detail: {
           title: {
             textStyle: {
