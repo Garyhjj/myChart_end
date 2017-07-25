@@ -5,39 +5,39 @@ import { Subject }           from 'rxjs/Subject';
 
 @Injectable()
 export class ChartService {
-  myBaidu:any;
+  myBaidu: any;
   chartTerms = new Subject<any>();
-  fontFamily:string[] = ['Helvetica', 'Tahoma', 'Arial', 'STXihei', '华文细黑', 'Microsoft YaHei', '微软雅黑', 'sans-serif'];
-  colors:string[] = ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3']
+  fontFamily: string[] = ['Helvetica', 'Tahoma', 'Arial', 'STXihei', '华文细黑', 'Microsoft YaHei', '微软雅黑', 'sans-serif'];
+  colors: string[] = ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3']
   constructor() {
 
   }
   getECharts() {
     return echarts;
   }
-  makeChartWithDom(dom:any,option:any) {
+  makeChartWithDom(dom: any, option: any) {
     let myChart = echarts.init(dom);
     myChart.setOption(option);
     return myChart;
   }
-  makeChart(id:string,option:any) {
+  makeChart(id: string, option: any) {
     let myChart = echarts.init(document.getElementById(id));
     myChart.setOption(option);
     return myChart;
   }
-  afterInit(option:any) {
+  afterInit(option: any) {
     option = this.addFontFamily(option);
     return option
   }
-  addFontFamily(option:any,fontFamily: string[] = this.fontFamily) {
-    let add = {fontFamily: fontFamily};
-    Object.assign(option.textStyle,add);
+  addFontFamily(option: any, fontFamily: string[] = this.fontFamily) {
+    let add = { fontFamily: fontFamily };
+    Object.assign(option.textStyle, add);
     return option
   }
   initSingleYChart(title: string,
-    data:{
-      legend_data:string[],
-      xAxis_data:string[],
+    data: {
+      legend_data: string[],
+      xAxis_data: string[],
       series: {
         name: string,
         type: string,
@@ -45,15 +45,15 @@ export class ChartService {
           value: number
         }[],
       }[]
-    }, isY_value:boolean = true) {
-    let mySeries:any = data.series;
+    }, isY_value: boolean = true) {
+    let mySeries: any = data.series;
     mySeries[0].barGap = 0;
-    let option:any = {
+    let option: any = {
       title: {
         text: title, textStyle: {
           fontSize: 18
         },
-        x:'center'
+        x: 'center'
       },
       tooltip: {
         trigger: 'axis'
@@ -76,8 +76,8 @@ export class ChartService {
         fontSize: 18
       }
     }
-    if(isY_value) {
-      option.yAxis = [{type: 'value'}]
+    if (isY_value) {
+      option.yAxis = [{ type: 'value' }]
       option.xAxis = [
         {
           type: 'category',
@@ -88,7 +88,7 @@ export class ChartService {
         }
       ]
     } else {
-      option.xAxis = [{type: 'value'}]
+      option.xAxis = [{ type: 'value' }]
       option.yAxis = [
         {
           type: 'category',
@@ -104,43 +104,43 @@ export class ChartService {
   }
 
   initPieChart(title: string,
-    data:{
-      legend_data:string[],
-      series:{
+    data: {
+      legend_data: string[],
+      series: {
         name: string,
-        data:{value:number, name: string}[]
+        data: { value: number, name: string }[]
       }[]
     }) {
-    let mySeries:any = data.series;
+    let mySeries: any = data.series;
     mySeries[0].type = 'pie';
     mySeries[0].itemStyle = {
       emphasis: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowColor: 'rgba(0, 0, 0, 0.5)'
       }
     };
     // mySeries[0].center =['50%','60%'];
     let option = {
-    title : {
+      title: {
         text: title,
         textStyle: {
           fontSize: 18
         },
-        x:'center'
-    },
-    tooltip : {
+        x: 'center'
+      },
+      tooltip: {
         trigger: 'item',
         formatter: "{a} <br/>{b} : <br/>{c} ({d}%)"
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      height: '60%',
-      containLabel: true
-    },
-    legend: {
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        height: '60%',
+        containLabel: true
+      },
+      legend: {
         orient: 'horizontal',
         top: '7%',
         itemGap: 4,
@@ -148,36 +148,36 @@ export class ChartService {
           fontSize: 13
         },
         data: data.legend_data
-    },
-    series : mySeries,
-    textStyle: {
+      },
+      series: mySeries,
+      textStyle: {
 
+      }
     }
-   }
-   option = this.afterInit(option);
+    option = this.afterInit(option);
     return option;
   }
 
   initDoubleYChart(title: string,
-    data:{
-      legend_data:string[],
-      xAxis_data:string[],
+    data: {
+      legend_data: string[],
+      xAxis_data: string[],
       series: {
         name: string,
         type: string,
-        yAxisIndex:number,
+        yAxisIndex: number,
         data: {
           value: number
         }[],
       }[]
     }) {
-    let mySeries:any = data.series;
+    let mySeries: any = data.series;
     mySeries[0].barGap = 0;
     let option = {
       title: {
         text: title, textStyle: {
         },
-        x:'center'
+        x: 'center'
       },
       tooltip: {
         trigger: 'axis'
@@ -189,6 +189,8 @@ export class ChartService {
         }
       },
       grid: {
+        show: true,
+        backgroundColor: '#c0c0c0',
         containLabel: true
       },
       xAxis: [
@@ -202,28 +204,33 @@ export class ChartService {
       ],
       yAxis: [
         {
-            type: 'value',
-            scale: true,
-            name: '',
-            min: 0,
-            boundaryGap: [0.2, 0.2],
-            nameTextStyle: {
-              fontSize: 14
+          type: 'value',
+          scale: true,
+          name: '',
+          min: 0,
+          boundaryGap: [0.2, 0.2],
+          nameTextStyle: {
+            fontSize: 14
+          },
+          splitLine: {
+            lineStyle: {
+              color: '#000'
             }
+          }
         },
         {
-            type: 'value',
-            scale: true,
-            name: '',
-            nameTextStyle: {
-              fontSize: 14
-            },
-            min: 0,
-            boundaryGap: [0.2, 0.2],
+          type: 'value',
+          scale: true,
+          name: '',
+          nameTextStyle: {
+            fontSize: 14
+          },
+          min: 0,
+          boundaryGap: [0.2, 0.2],
 
-           splitLine: {
+          splitLine: {
            	show: false
-           }
+          }
         }
       ],
       series: mySeries,

@@ -326,7 +326,11 @@ export class BasicChartComponent implements OnInit {
     });
     option2.color = color;
     if (!this._isDoubleY) {
-      option2.yAxis = [{ type: 'value' }]
+      option2.yAxis = [{ type: 'value',splitLine: {
+        lineStyle: {
+          color: '#000'
+        }
+      }}]
     }
     if (this.hasSwich) {
       [option2.yAxis, option2.xAxis] = [option2.xAxis, option2.yAxis];
