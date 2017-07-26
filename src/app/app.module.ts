@@ -10,7 +10,7 @@ import { DetailDefineComponent } from './detail-define/detail-define.component';
 
 import{ ChartService } from './shared/service/chart.service';
 import { MyBMapDirective }  from './shared/directive/Bmap.directive';
-
+import { NgValidatorExtendService } from './shared/service/ng-validator-extend.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,7 @@ import { MyBMapDirective }  from './shared/directive/Bmap.directive';
     HttpModule,
     AppRoutingModule,
   ],
-  providers: [ChartService],
+  providers: [ChartService, NgValidatorExtendService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

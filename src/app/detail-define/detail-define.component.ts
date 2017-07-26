@@ -1,7 +1,21 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { ChartService } from '../shared/service/chart.service';
 import { Subscription } from 'rxjs/rx';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, AbstractControl } from '@angular/forms';
+import { NgValidatorExtendService } from '../shared/service/ng-validator-extend.service';
+ var MyValidator:any = function(){
+   function test(ctrl: AbstractControl) {
+     console.log(ctrl);
+   }
+  // let value = ctrl.value;
+  // if(value.indexOf('Will') != -1) {
+  //   return null;
+  // } else {
+  //   return {
+  //     'must-have-will': true
+  //   };
+  // }
+}
 
 @Component({
   selector: 'app-detail-define',
@@ -21,7 +35,7 @@ export class DetailDefineComponent implements OnInit,OnDestroy {
   myRotate: number[] = [];
   chartSub:Subscription;
 
-  constructor(private chartService: ChartService, private formBuilder: FormBuilder) { }
+  constructor(private chartService: ChartService, private formBuilder: FormBuilder, private validExd:NgValidatorExtendService) { }
   ngOnInit() {
     // this.changeDetail.emit('1');
     for (let i = 0; i < 50; i++) {
@@ -66,7 +80,7 @@ export class DetailDefineComponent implements OnInit,OnDestroy {
     return this.formBuilder.group({
       switch: [false, Validators.required],
       scale: [false, Validators.required],
-      title_position: ['', Validators.required],
+      title_position: ['', [Validators.required]],
       title_fontSize: [18, Validators.required],
       legend_orient: ['horizontal', Validators.required],
       legend_position: ['', Validators.required],
