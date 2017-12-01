@@ -14,9 +14,9 @@
         <label for="title">配置内容</label>
         <textarea class="form-control" rows="40" [value] ="myOption | json " #code1 (input)="dealCode(code1.value)"></textarea>
       </div>
-      <div class="chart" myBMap [pos]="[113.13402564, 23.03509484]">
+      <!-- <div class="chart" myBMap [pos]="[113.13402564, 23.03509484]">
 
-      </div>
+      </div> -->
     </div>
     <div class="hide" [class.show]="showWhere == 1">
       <app-detail-define (changeDetail)="getDetail($event)" [isDoubleY]="_isDoubleY" [isPie]="_isPie"></app-detail-define>

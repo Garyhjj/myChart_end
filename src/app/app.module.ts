@@ -9,14 +9,12 @@ import { BasicChartComponent } from './basic-chart/basic-chart.component';
 import { DetailDefineComponent } from './detail-define/detail-define.component';
 
 import{ ChartService } from './shared/service/chart.service';
-import { MyBMapDirective }  from './shared/directive/Bmap.directive';
 import { NgValidatorExtendService } from './shared/service/ng-validator-extend.service';
 @NgModule({
   declarations: [
     AppComponent,
     BasicChartComponent,
-    DetailDefineComponent,
-    MyBMapDirective
+    DetailDefineComponent
   ],
   imports: [
     BrowserModule,
